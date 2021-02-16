@@ -3,6 +3,7 @@
     package="com.codinginflow.mvvmnewsapp">
 
     <application
+        android:name=".NewsApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
