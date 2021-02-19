@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,13 +23,14 @@ class BreakingNewsViewModel @Inject constructor(
     private val eventChannel = Channel<Event>()
     val events = eventChannel.receiveAsFlow()
 
-    private val refreshTriggerChannel = Channel<Unit>()
+    private val refreshTriggerChannel = Channel<Refresh>()
     private val refreshTrigger = refreshTriggerChannel.receiveAsFlow()
 
     var pendingScrollToTopAfterRefresh = false
 
-    val breakingNews = refreshTrigger.flatMapLatest {
+    val breakingNews = refreshTrigger.flatMapLatest { refresh ->
         repository.getBreakingNews(
+            refresh == Refresh.FORCE,
             onFetchSuccess = {
                 pendingScrollToTopAfterRefresh = true
             },
@@ -38,10 +40,18 @@ class BreakingNewsViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    init {
+        viewModelScope.launch {
+            repository.deleteNonBookmarkedArticlesOlderThan(
+                System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
+            )
+        }
+    }
+
     fun onStart() {
         if (breakingNews.value !is Resource.Loading) {
             viewModelScope.launch {
-                refreshTriggerChannel.send(Unit)
+                refreshTriggerChannel.send(Refresh.NORMAL)
             }
         }
     }
@@ -49,9 +59,13 @@ class BreakingNewsViewModel @Inject constructor(
     fun onManualRefresh() {
         if (breakingNews.value !is Resource.Loading) {
             viewModelScope.launch {
-                refreshTriggerChannel.send(Unit)
+                refreshTriggerChannel.send(Refresh.FORCE)
             }
         }
+    }
+
+    enum class Refresh {
+        FORCE, NORMAL
     }
 
     sealed class Event {
