@@ -64,6 +64,14 @@ class BreakingNewsViewModel @Inject constructor(
         }
     }
 
+    fun onBookmarkClick(article: NewsArticle) {
+        val currentlyBookmarked = article.isBookmarked
+        val updatedArticle = article.copy(isBookmarked = !currentlyBookmarked)
+        viewModelScope.launch {
+            repository.updateArticle(updatedArticle)
+        }
+    }
+
     enum class Refresh {
         FORCE, NORMAL
     }
