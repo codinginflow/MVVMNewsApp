@@ -84,9 +84,19 @@ class MainActivity : AppCompatActivity() {
                 else -> throw IllegalArgumentException("Unexpected itemId")
             }
 
-            selectFragment(fragment)
+            if (selectedFragment === fragment) {
+                if (fragment is OnBottomNavigationFragmentReselectedListener) {
+                    fragment.onBottomNavigationFragmentReselected()
+                }
+            } else {
+                selectFragment(fragment)
+            }
             true
         }
+    }
+
+    interface OnBottomNavigationFragmentReselectedListener {
+        fun onBottomNavigationFragmentReselected()
     }
 
     override fun onBackPressed() {
