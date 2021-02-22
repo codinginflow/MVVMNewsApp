@@ -9,8 +9,7 @@ import com.codinginflow.mvvmnewsapp.databinding.ItemNewsArticleBinding
 class NewsArticleListAdapter(
     private val onItemClick: (NewsArticle) -> Unit,
     private val onBookmarkClick: (NewsArticle) -> Unit
-) :
-    ListAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()) {
+) : ListAdapter<NewsArticle, NewsArticleViewHolder>(NewsArticleComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
         val binding =

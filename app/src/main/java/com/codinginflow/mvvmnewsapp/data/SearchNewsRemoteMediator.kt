@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.codinginflow.mvvmnewsapp.api.NewsApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
@@ -26,6 +25,7 @@ class SearchNewsRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, NewsArticle>
     ): MediatorResult {
+
         val page = when (loadType) {
             LoadType.REFRESH -> NEWS_STARTING_PAGE_INDEX
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)

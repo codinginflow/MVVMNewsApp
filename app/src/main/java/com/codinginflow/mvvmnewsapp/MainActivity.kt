@@ -1,7 +1,7 @@
 package com.codinginflow.mvvmnewsapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.codinginflow.mvvmnewsapp.databinding.ActivityMainBinding
 import com.codinginflow.mvvmnewsapp.features.bookmarks.BookmarksFragment

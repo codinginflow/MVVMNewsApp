@@ -3,7 +3,6 @@ package com.codinginflow.mvvmnewsapp.features.searchnews
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.ListAdapter
 import com.codinginflow.mvvmnewsapp.data.NewsArticle
 import com.codinginflow.mvvmnewsapp.databinding.ItemNewsArticleBinding
 import com.codinginflow.mvvmnewsapp.shared.NewsArticleComparator
