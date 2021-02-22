@@ -20,7 +20,6 @@ inline fun <ResultType, RequestType> networkBoundResource(
         }
 
         try {
-            delay(2000)
             saveFetchResult(fetch())
             onFetchSuccess()
             loading.cancel()

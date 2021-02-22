@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.codinginflow.mvvmnewsapp.MainActivity
 import com.codinginflow.mvvmnewsapp.R
 import com.codinginflow.mvvmnewsapp.databinding.FragmentBookmarksBinding
@@ -43,6 +44,9 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks),
                 viewModel.onBookmarkClick(article)
             }
         )
+
+        bookmarksAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         binding.apply {
             recyclerView.apply {
