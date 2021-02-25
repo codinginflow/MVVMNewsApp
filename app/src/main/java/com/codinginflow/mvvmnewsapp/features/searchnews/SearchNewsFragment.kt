@@ -35,12 +35,14 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news),
     private var currentBinding: FragmentSearchNewsBinding? = null
     private val binding get() = currentBinding!!
 
+    private lateinit var newsArticleAdapter: NewsArticlePagingAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         currentBinding = FragmentSearchNewsBinding.bind(view)
 
-        val newsArticleAdapter = NewsArticlePagingAdapter(
+        newsArticleAdapter = NewsArticlePagingAdapter(
             onItemClick = { article ->
                 val uri = Uri.parse(article.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -182,7 +184,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news),
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.action_refresh -> {
-                (binding.recyclerView.adapter as NewsArticlePagingAdapter).refresh()
+                newsArticleAdapter.refresh()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -194,6 +196,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.recyclerView.adapter = null
         currentBinding = null
     }
 }
