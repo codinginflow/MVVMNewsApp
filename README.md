@@ -2,4 +2,4 @@ This is the source code of the **MVVM Caching Course** created by Florian Walthe
 
 You can get the course here: https://www.codinginflow.com/caching
 
-To see the full code check out the branch for **Part 15**. The app uses the REST API of https://newsapi.org.
+To see the full code check out the branch for **Part 15**. To run the app get a free API key from https://newsapi.org and put it into your gradle.properties file with the key news_api_access_key.
